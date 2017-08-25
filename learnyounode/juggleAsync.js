@@ -38,33 +38,38 @@ for (var i = 0; i < 3; i++) { // iterate through the streams
                     console.log(content[2]);
                 }
             }))
-        })
+        });
     })(i) // use i to bind function so it gets the streams int the
         // correct order
 }
 
+//official solution
+/*
+var http = require('http');
+var bl = require('bl');
+var results = [];
+var count = 0;
 
-//http.get(urls, function(response) {
-//    urls.forEach(function (data) {
-//        response.pipe(bl(function (err, data) {
-//            if (err) {
-//                console.error(err);
-//            }
-//            
-//            console.log(data.toString());
-//        }))
-//    })
-    
-    
-    
-        
-//        url.forEach(function (data) {
-//            response.pipe(bl(function(err, data) {
-//                if (err) {
-//                    console.error(err)
-//                }
-//                
-//                console.log(data.toString());
-//        })
-//    }))
-//})
+function printResults() {
+    for (var i = 0; i < 3; i++) {
+        console.log(results[i]);
+    }
+}
+
+function httpGet(index) {
+    http.get(process.argv[2 + index], function(response) {
+        response.pipe(bl(function (err, data) {
+            if (err) {
+                return console.error(err);
+            }
+            
+            results[index] = data.toString();
+            count++;
+            
+            if (count == 3) {
+                printResults();
+            }
+        }))
+    });
+}
+*/
